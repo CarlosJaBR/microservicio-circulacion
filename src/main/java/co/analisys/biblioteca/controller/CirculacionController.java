@@ -6,6 +6,7 @@ import co.analisys.biblioteca.model.PrestamoId;
 import co.analisys.biblioteca.model.UsuarioId;
 import co.analisys.biblioteca.service.CirculacionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class CirculacionController {
     }
 
     @GetMapping("/prestamos")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public List<Prestamo> obtenerTodosPrestamos() {
         return circulacionService.obtenerTodosPrestamos();
     }
