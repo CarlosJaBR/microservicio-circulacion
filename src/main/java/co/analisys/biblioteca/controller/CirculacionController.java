@@ -23,6 +23,7 @@ public class CirculacionController {
         description = "Permite prestar un libro a un usuario."
     )
     @PostMapping("/prestar")
+    @PreAuthorize("hasRole('ROLE_LIBRARIAN')")
     public void prestarLibro(
         @RequestParam String usuarioId,
         @RequestParam String libroId
@@ -38,6 +39,7 @@ public class CirculacionController {
         description = "Permite devolver un libro prestado."
     )
     @PostMapping("/devolver")
+    @PreAuthorize("hasRole('ROLE_LIBRARIAN)")
     public void devolverLibro(@RequestParam String prestamoId) {
         circulacionService.devolverLibro(new PrestamoId(prestamoId));
     }
@@ -47,7 +49,7 @@ public class CirculacionController {
         description = "Este endpoint permite obtener una lista de todos los préstamos registrados en el sistema."
     )
     @GetMapping("/prestamos")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_LIBRARIAN')")
     public List<Prestamo> obtenerTodosPrestamos() {
         return circulacionService.obtenerTodosPrestamos();
     }
